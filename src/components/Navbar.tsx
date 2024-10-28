@@ -13,9 +13,9 @@ const Navbar = async () => {
 
   return (
     <header className="p-5 bg-transparent bg-opacity-90 backdrop-blur-md shadow-lg border-b border-violet-700">
-      <nav className="flex items-center justify-between b-rose-600">
+      <nav className="b-rose-600 px-10 flex items-center justify-between">
         <Link href="/" className="b-green-700">
-          <Image src="/logo.svg" width={230} height={230} alt="Pitchdeck" />
+          <Image src="/logo.svg" width={200} height={200} alt="Pitchdeck" />
         </Link>
         <div className="b-sky-600 flex items-center gap-5">
           {session && session.user ? (
@@ -31,7 +31,7 @@ const Navbar = async () => {
                 </button>
               </form>
 
-              <Link href={`/user/${session.user.id}`}>{session.user.image && <Image src={session.user.image} width={40} height={40} alt="Avatar" className="rounded-full" />}</Link>
+              <Link href={`/user/${session.user.id}`}>{session.user.image && <Image src={session.user.image} width={35} height={35} alt="Avatar" className="rounded-full" />}</Link>
             </>
           ) : (
             <form action={handleGithubLogin} className="b-green-500">
