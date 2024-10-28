@@ -6,6 +6,6 @@ export const handleGithubLogin = async () => {
   await signIn("github");
 };
 
-export const handeleLogout = async () => {
+export const handleLogout = async () => {
   await signOut({ redirectTo: "/" });
 };
