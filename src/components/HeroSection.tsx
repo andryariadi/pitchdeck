@@ -6,9 +6,10 @@ type HeroProps = {
   title: string;
   desc?: string;
   field?: boolean;
+  query?: string;
 };
 
-const HeroSection = ({ tag, title, desc, field }: HeroProps) => {
+const HeroSection = ({ tag, title, desc, field, query }: HeroProps) => {
   return (
     <section className="relative h-96 w-full max-w-[85rem] mx-auto mt-10 overflow-hidden border border-primary border-opacity-60 flex flex-col items-center justify-center rounded-lg">
       <div className="absolute inset-0 w-full h-full bg-primary opacity-5 z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
@@ -26,7 +27,7 @@ const HeroSection = ({ tag, title, desc, field }: HeroProps) => {
 
         {desc && <p className="text-gray-300">{desc}</p>}
 
-        {field && <Search />}
+        {field && <Search query={query} />}
       </div>
 
       <Boxes />
