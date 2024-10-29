@@ -15,7 +15,7 @@ const Navbar = async () => {
   return (
     <header className="p-5 bg-transparent bg-opacity-90 backdrop-blur-md shadow-lg border-b border-primary border-opacity-60">
       <nav className="b-rose-600 px-10 flex items-center justify-between">
-        <Link href="/" className="b-green-700">
+        <Link href="/" className="b-green-700 hover:scale-105 transition-all duration-300">
           <Image src="/logo.svg" width={200} height={200} alt="Pitchdeck" />
         </Link>
         <div className="b-sky-600 flex items-center gap-5">
@@ -31,10 +31,7 @@ const Navbar = async () => {
             </>
           ) : (
             <form action={handleGithubLogin} className="b-green-500">
-              <button type="submit" className="flex items-center gap-2 border border-gray-500 p-2 rounded-lg text-gray-400 text-sm">
-                <ImGithub size={24} />
-                <span>Login</span>
-              </button>
+              <Button btn title="Login" icon={ImGithub} />
             </form>
           )}
         </div>
