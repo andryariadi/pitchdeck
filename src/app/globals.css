@@ -32,7 +32,7 @@
 
 .card::after {
   background-color: var(--background-color);
-  content: url("/eye.png");
+  content: attr(data-view);
   position: absolute;
   top: 0;
   right: 0;
@@ -40,10 +40,12 @@
   width: calc(30% - 10px);
   border-radius: var(--border-radius);
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
+  padding-left: 23px;
   font-weight: 500;
   font-size: medium;
+  color: #835ff6;
 }
 
 .card .shadow {
