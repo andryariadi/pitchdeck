@@ -65,7 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable} antialiased bg-gray-800 font-work-sans`}>{children}</body>
+      <body className={`${workSans.variable} antialiased bg-gray-800 font-work-sans h-[100rem]`}>{children}</body>
     </html>
   );
 }
