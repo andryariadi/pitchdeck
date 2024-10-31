@@ -1,15 +1,17 @@
 import HeroSection from "@/components/HeroSection";
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
-import { client } from "@/sanity/lib/client";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { STARTUP_QUERY } from "@/sanity/lib/queries";
+// import { client } from "@/sanity/lib/client";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   const query = (await searchParams).query;
+  const params = { search: query || null };
 
   // if in file client.ts useCdn is false its mean data will not cached and will fetch from server
   const { data: posts } = await sanityFetch({
     query: STARTUP_QUERY,
+    params,
   });
 
   // if in file client.ts useCdn is true its mean data will cached in CDN
