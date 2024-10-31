@@ -18,7 +18,7 @@
 }
 
 /* Card stlye */
-.card::before {
+/* .card::before {
   background-color: transparent;
   content: "";
   position: absolute;
@@ -28,7 +28,7 @@
   height: 70px;
   border-bottom-left-radius: var(--border-radius);
   box-shadow: -30px 30px 0 var(--background-color);
-}
+} */
 
 .card::after {
   background-color: var(--background-color);

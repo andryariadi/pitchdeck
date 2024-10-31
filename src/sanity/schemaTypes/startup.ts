@@ -17,19 +17,17 @@ export const startup = defineType({
       },
     }),
     defineField({
-      name: "username",
-      type: "string",
-    }),
-    defineField({
       name: "author",
       type: "reference",
-      to: {
-        type: "author",
-      },
+      to: { type: "author" },
     }),
     defineField({
       name: "views",
       type: "number",
+    }),
+    defineField({
+      name: "description",
+      type: "text",
     }),
     defineField({
       name: "category",
