@@ -1,71 +1,19 @@
 import HeroSection from "@/components/HeroSection";
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 import { client } from "@/sanity/lib/client";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { STARTUP_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   const query = (await searchParams).query;
 
-  const posts = await client.fetch(STARTUP_QUERY);
+  // if in file client.ts useCdn is false its mean data will not cached and will fetch from server
+  const { data: posts } = await sanityFetch({
+    query: STARTUP_QUERY,
+  });
 
-  // const posts = [
-  //   {
-  //     _createdAt: new Date(),
-  //     views: 55,
-  //     author: {
-  //       _id: 1,
-  //       name: "Andry",
-  //       avatar: "https://i.pinimg.com/564x/cb/10/4b/cb104b414d4d445b010e092794b9b2b8.jpg",
-  //     },
-  //     _id: 1,
-  //     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, porro eius sed quam non quod at? Nemo ab voluptatibus dolorem amet maxime dolorum consectetur. In porro neque atque ipsum ea.",
-  //     image: "https://cdn.pixabay.com/photo/2022/09/29/17/15/halloween-7487706_960_720.jpg",
-  //     category: "Robots",
-  //     title: "AI revengers",
-  //   },
-  //   {
-  //     _createdAt: new Date(),
-  //     views: 30,
-  //     author: {
-  //       _id: 1,
-  //       name: "Andry",
-  //       avatar: "https://i.pinimg.com/564x/cb/10/4b/cb104b414d4d445b010e092794b9b2b8.jpg",
-  //     },
-  //     _id: 2,
-  //     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, porro eius sed quam non quod at? Nemo ab voluptatibus dolorem amet maxime dolorum consectetur. In porro neque atque ipsum ea.",
-  //     image: "https://cdn.pixabay.com/photo/2022/09/29/17/15/halloween-7487706_960_720.jpg",
-  //     category: "Robots",
-  //     title: "AI revengers",
-  //   },
-  //   {
-  //     _createdAt: new Date(),
-  //     views: 26,
-  //     author: {
-  //       _id: 1,
-  //       name: "Andry",
-  //       avatar: "https://i.pinimg.com/564x/cb/10/4b/cb104b414d4d445b010e092794b9b2b8.jpg",
-  //     },
-  //     _id: 3,
-  //     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, porro eius sed quam non quod at? Nemo ab voluptatibus dolorem amet maxime dolorum consectetur. In porro neque atque ipsum ea.",
-  //     image: "https://cdn.pixabay.com/photo/2022/09/29/17/15/halloween-7487706_960_720.jpg",
-  //     category: "Robots",
-  //     title: "AI revengers",
-  //   },
-  //   {
-  //     _createdAt: new Date(),
-  //     views: 15,
-  //     author: {
-  //       _id: 1,
-  //       name: "Andry",
-  //       avatar: "https://i.pinimg.com/564x/cb/10/4b/cb104b414d4d445b010e092794b9b2b8.jpg",
-  //     },
-  //     _id: 4,
-  //     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, porro eius sed quam non quod at? Nemo ab voluptatibus dolorem amet maxime dolorum consectetur. In porro neque atque ipsum ea.",
-  //     image: "https://cdn.pixabay.com/photo/2022/09/29/17/15/halloween-7487706_960_720.jpg",
-  //     category: "Robots",
-  //     title: "AI revengers",
-  //   },
-  // ];
+  // if in file client.ts useCdn is true its mean data will cached in CDN
+  // const posts = await client.fetch(STARTUP_QUERY);
 
   console.log(posts, "<---dihomepage");
 
@@ -82,6 +30,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         {/* Card */}
         <div className="b-amber-500 grid grid-cols-2 md:grid-cols-3 gap-14">{posts?.length > 0 ? posts.map((post: StartupTypeCard) => <StartupCard post={post} key={post._id} />) : <p>No startups found</p>}</div>
       </section>
+
+      {/* if in file client.ts useCdn is true its mean data will cached in CDN */}
+      <SanityLive />
     </>
   );
 }
