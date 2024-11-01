@@ -7,13 +7,13 @@ import { STARTUP_QUERY } from "@/sanity/lib/queries";
 export default async function Home({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   const query = (await searchParams).query;
 
-  // if in file client.ts useCdn is false its mean data will not cached and will fetch from server
+  // if in file client.ts useCdn is false its mean data will not cached and will fetch from server so used sanityFetch
   const { data: posts } = await sanityFetch({
     query: STARTUP_QUERY,
     params: { search: query || null },
   });
 
-  // if in file client.ts useCdn is true its mean data will cached in CDN
+  // if in file client.ts useCdn is true its mean data will cached in CDN so used client.fetch
   // const posts = await client.fetch(STARTUP_QUERY);
 
   console.log(posts, "<---dihomepage");

@@ -5,6 +5,11 @@ import { STARTUP_BY_ID_QUERY } from "@/sanity/lib/queries";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import markdownit from "markdown-it";
+import { Suspense } from "react";
+import View from "@/components/View";
+
+const md = markdownit();
 
 export const experimental_ppr = true;
 
@@ -17,6 +22,8 @@ const DetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const datePost = formatDate(post._createdAt);
 
   if (!post) return notFound();
+
+  const parsedContent = md.render(post?.pitch || "");
 
   console.log(post, "<---didetailPage");
 
@@ -57,15 +64,19 @@ const DetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           {/* Post information */}
-          <div className="bg-green-600 space-y-3">
+          <div className="bg-green-600 space-y-3 pb-5 border-b border-gray-400">
             <h3 className="text-[30px] font-bold">Pitch Details</h3>
 
-            <p>{post.description}</p>
+            {parsedContent ? <article dangerouslySetInnerHTML={{ __html: parsedContent }} className="prose max-w-4xl font-work-sans break-all" /> : <p className="text-gray-400 text-sm text-pretty bg-violet-500">No detail provided!</p>}
           </div>
         </div>
 
         {/* Editor */}
-        <div>Editor</div>
+        <div className="bg-violet-500 w-full max-w-4xl mx-auto">Editor</div>
+
+        <Suspense fallback={<div>Loading...</div>}>
+          <View id={id} />
+        </Suspense>
       </section>
     </>
   );
