@@ -1,15 +1,25 @@
-// import { client } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import Ping from "./Ping";
 import { STARTUP_VIEWS_QUERY } from "@/sanity/lib/queries";
-import { sanityFetch } from "@/sanity/lib/live";
+// import { sanityFetch } from "@/sanity/lib/live";
+import { writeClient } from "@/sanity/lib/write.client";
+import { unstable_after as after } from "next/server";
 
 const View = async ({ id }: { id: string }) => {
-  //   const { views: totalViews } = await client.withConfig({ useCdn: false }).fetch(STARTUP_VIEWS_QUERY, { id });
+  const { views: totalViews } = await client.withConfig({ useCdn: false }).fetch(STARTUP_VIEWS_QUERY, { id });
 
-  const { data: totalViews } = await sanityFetch({
-    query: STARTUP_VIEWS_QUERY,
-    params: { id },
-  });
+  // const { data: totalViews } = await sanityFetch({
+  //   query: STARTUP_VIEWS_QUERY,
+  //   params: { id },
+  // });
+
+  after(
+    async () =>
+      await writeClient
+        .patch(id)
+        .set({ views: totalViews + 1 })
+        .commit()
+  );
 
   console.log(totalViews, "<---diview");
 
@@ -20,7 +30,7 @@ const View = async ({ id }: { id: string }) => {
       </div>
 
       <div className="text-gray-300 font-medium text-[16px] bg-gradient-to-r from-primary to-violet-500 px-4 py-2 rounded-lg capitalize">
-        <span>{totalViews.views} views</span>
+        <span>{totalViews} views</span>
       </div>
     </div>
   );
